@@ -1,0 +1,30 @@
+
+
+services:
+  web_server:
+
+  php:
+    build          : ./docker/php/${PHP_VERSION}
+    container_name : php-${PHP_VERSION}
+    ports:
+      - '${DOCKER_INTERFACE}:9000:9000'
+    networks:
+      - bitrix
+    volumes:
+      - ./docker/logs/php:/var/log/php
+#    depends_on:
+#      - memcached
+#    links:
+#      - mysql
+#      - memcached
+    restart        : always
+
+
+
+networks:
+  bitrix:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: ${SUBNET}
