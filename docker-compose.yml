@@ -1,5 +1,3 @@
-
-
 services:
   php:
     build          :
@@ -16,6 +14,7 @@ services:
     volumes:
       - ./logs/php:/var/log/php
     restart        : unless-stopped
+
   database:
     build:
       ./docker/database/${DB_SERVER_TYPE}-${DB_SERVER_VERSION}
@@ -34,12 +33,22 @@ services:
 #    volumes:
 #      - ./logs/mysql:/var/log/mysql
     restart: unless-stopped
-#  server:
-#    build:
-#      ./docker/server/${WEB_SERVER_TYPE}
-#    container_name:
-#      ${PROJECT_NAME}-${WEB_SERVER_TYPE}
-#
+
+  server:
+    build:
+      ./docker/server/${WEB_SERVER_TYPE}
+    container_name:
+      ${PROJECT_NAME}-${WEB_SERVER_TYPE}
+    ports:
+      - '${DOCKER_INTERFACE}:80:80'
+      - '${DOCKER_INTERFACE}:443:443'
+    links:
+      - php
+      - database
+    networks:
+      - marketes
+    restart        : unless-stopped
+
 
 
 
