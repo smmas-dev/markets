@@ -2,19 +2,46 @@
 
 services:
   php:
-    build          : ./docker/php/${PHP_VERSION}
-    container_name : ${PROJECT_NAME}-php-${PHP_VERSION}
+    build          :
+      ./docker/php/${PHP_VERSION}
+    container_name :
+      ${PROJECT_NAME}-php-${PHP_VERSION}
     ports:
       - '${DOCKER_INTERFACE}:${PHP_INTERFACE}'
-#    links:
-#      - mysql
+    links:
+      - database
 #      - memcached
     networks:
       - marketes
     volumes:
-      - ./docker/logs/php:/var/log/php
-
+      - ./logs/php:/var/log/php
     restart        : unless-stopped
+  database:
+    build:
+      ./docker/database/${DB_SERVER_TYPE}-${DB_SERVER_VERSION}
+    container_name:
+      ${PROJECT_NAME}-${DB_SERVER_TYPE}-${DB_SERVER_VERSION}
+    ports:
+      - '${DOCKER_INTERFACE}:${DATABASE_INTERFACE}'
+    environment:
+      MYSQL_DATABASE     : ${MYSQL_DATABASE}
+      MYSQL_USER         : ${MYSQL_USER}
+      MYSQL_PASSWORD     : ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ                 : Europe/Moscow
+    networks:
+      - marketes
+#    volumes:
+#      - ./logs/mysql:/var/log/mysql
+    restart: unless-stopped
+#  server:
+#    build:
+#      ./docker/server/${WEB_SERVER_TYPE}
+#    container_name:
+#      ${PROJECT_NAME}-${WEB_SERVER_TYPE}
+#
+
+
 
 
 
