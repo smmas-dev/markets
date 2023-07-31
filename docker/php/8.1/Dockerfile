@@ -1,6 +1,5 @@
 FROM php:8.1-fpm
 
-
 RUN apt-get update\
     && apt-get -y --no-install-recommends install \
     git \
@@ -27,10 +26,6 @@ RUN apt-get update\
 COPY ./php.ini /etc/php/8.1/fpm/conf.d/90-php.ini
 COPY ./php.ini /etc/php/8.1/cli/conf.d/90-php.ini
 
-RUN usermod -u 1000 www-data \
-    && usermod -d /home/marketes www-data
-
+RUN usermod -u 1000 www-data
 
 WORKDIR "/home/marketes/public"
-
-EXPOSE 9000
