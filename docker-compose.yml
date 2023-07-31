@@ -45,20 +45,21 @@ services:
       - php
       - database
     volumes:
-      - ./logs/${WEB_SERVER_TYPE}:/var/log/${WEB_SERVER_TYPE}
+      - ./logs/${WEB_SERVER_TYPE}-${WEB_SERVER_VERSION}:/var/log/${WEB_SERVER_TYPE}-${WEB_SERVER_VERSION}
     networks:
       - marketes
     restart        : unless-stopped
 
   cache:
-    build:
-      ./docker/cache/memcached
+    image: ${CACHE_TYPE}:${CACHE_VERSION}
     container_name:
-      ${PROJECT_NAME}-php-memcached
+      ${PROJECT_NAME}-${CACHE_TYPE}-${CACHE_VERSION}
     ports:
-      - '${DOCKER_INTERFACE}:11211:11211'
+      - '${DOCKER_INTERFACE}:${CACHE_INTERFACE}'
     networks:
       - marketes
+    volumes:
+      - ./logs/${CACHE_TYPE}-${CACHE_VERSION}:/var/log/${CACHE_TYPE}-${CACHE_VERSION}
     restart: unless-stopped
 #  search:
 
