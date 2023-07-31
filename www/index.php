@@ -3,16 +3,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>LNMP STACK</title>
 	<link rel="stylesheet" href="/assets/css/bulma.min.css">
 </head>
 <body>
 <section class="hero is-medium is-info is-bold">
 	<div class="hero-body">
 		<div class="container has-text-centered">
-			<h1 class="title">
-				LNMP STACK
-			</h1>
 			<h2 class="subtitle">
 				Your local development environment
 			</h2>
@@ -45,16 +41,6 @@
 							mysqli_close($link);
 							?>
 						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="column">
-				<h3 class="title is-3 has-text-centered">Quick Links</h3>
-				<hr>
-				<div class="content">
-					<ul>
-						<li><a href="http://localhost/phpinfo.php">phpinfo()</a></li>
-						<li><a href="http://localhost/test_db.php">Test DB Connection</a></li>
 					</ul>
 				</div>
 			</div>
