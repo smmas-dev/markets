@@ -9,3 +9,7 @@
 ```shell
 cp .env.example .env
 ```
+### Заупск
+```shell
+docker compose up -d
+```
