@@ -15,6 +15,8 @@ services:
       - ./logs/php:/var/log/php
     restart        : unless-stopped
 
+#  php-crown:
+
   database:
     build:
       ./docker/database/${DB_SERVER_TYPE}-${DB_SERVER_VERSION}
@@ -48,10 +50,6 @@ services:
     networks:
       - marketes
     restart        : unless-stopped
-
-
-
-
 
 
 networks:
