@@ -12,6 +12,7 @@ services:
       - marketes
     volumes:
       - ./logs/php-${PHP_VERSION}:/var/log/php-${PHP_VERSION}
+      - ./www:/home/marketes/public
     restart        : unless-stopped
 
   database:
@@ -46,6 +47,7 @@ services:
       - database
     volumes:
       - ./logs/${WEB_SERVER_TYPE}-${WEB_SERVER_VERSION}:/var/log/${WEB_SERVER_TYPE}-${WEB_SERVER_VERSION}
+      - ./www:/home/marketes/public
     networks:
       - marketes
     restart        : unless-stopped
