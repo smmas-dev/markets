@@ -50,6 +50,9 @@ services:
       - marketes
     restart        : unless-stopped
 
+#  cache:
+#  search:
+
 networks:
   marketes:
     driver: bridge
