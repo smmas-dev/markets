@@ -28,7 +28,7 @@
 						<li>
 							<?php
 
-							$link = mysqli_connect("marketes", "marketes", "test12345", null);
+							$link = mysqli_connect("database", "marketes", "test12345", null);
 
 							/* check connection */
 							if (mysqli_connect_errno()) {
