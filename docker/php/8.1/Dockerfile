@@ -22,10 +22,10 @@ RUN apt-get update\
     php8.1-mysql     \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
-
 COPY ./php.ini /etc/php/8.1/fpm/conf.d/90-php.ini
 COPY ./php.ini /etc/php/8.1/cli/conf.d/90-php.ini
 
 RUN usermod -u 1000 www-data
 
 WORKDIR "/home/marketes/public"
+
