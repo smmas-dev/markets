@@ -50,7 +50,16 @@ services:
       - marketes
     restart        : unless-stopped
 
-#  cache:
+  cache:
+    build:
+      ./docker/cache/memcached
+    container_name:
+      ${PROJECT_NAME}-php-memcached
+    ports:
+      - '${DOCKER_INTERFACE}:11211:11211'
+    networks:
+      - marketes
+    restart: unless-stopped
 #  search:
 
 networks:
