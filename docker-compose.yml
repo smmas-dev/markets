@@ -8,14 +8,11 @@ services:
       - '${DOCKER_INTERFACE}:${PHP_INTERFACE}'
     links:
       - database
-#      - memcached
     networks:
       - marketes
     volumes:
-      - ./logs/php:/var/log/php
+      - ./logs/php-${PHP_VERSION}:/var/log/php-${PHP_VERSION}
     restart        : unless-stopped
-
-#  php-crown:
 
   database:
     build:
@@ -32,25 +29,26 @@ services:
       TZ                 : Europe/Moscow
     networks:
       - marketes
-#    volumes:
-#      - ./logs/mysql:/var/log/mysql
+    volumes:
+      - ./logs/${DB_SERVER_TYPE}-${DB_SERVER_VERSION}:/var/log/${DB_SERVER_TYPE}-${DB_SERVER_VERSION}
     restart: unless-stopped
 
   server:
     build:
       ./docker/server/${WEB_SERVER_TYPE}
     container_name:
-      ${PROJECT_NAME}-${WEB_SERVER_TYPE}
+      ${PROJECT_NAME}-${WEB_SERVER_TYPE}-${WEB_SERVER_VERSION}
     ports:
-      - '${DOCKER_INTERFACE}:80:80'
-      - '${DOCKER_INTERFACE}:443:443'
+      - '${DOCKER_INTERFACE}:${SERVER_INTERFACE_IN}'
+      - '${DOCKER_INTERFACE}:${SERVER_INTERFACE_OUT}'
     links:
       - php
       - database
+    volumes:
+      - ./logs/${WEB_SERVER_TYPE}:/var/log/${WEB_SERVER_TYPE}
     networks:
       - marketes
     restart        : unless-stopped
-
 
 networks:
   marketes:
