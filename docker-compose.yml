@@ -1,0 +1,57 @@
+services:
+  php:
+    build          :
+      ./docker/php/${PHP_VERSION}
+    container_name :
+      ${PROJECT_NAME}-php-${PHP_VERSION}
+    ports:
+      - '${DOCKER_INTERFACE}:${PHP_INTERFACE}'
+    links:
+      - database
+    networks:
+      - marketes
+    volumes:
+      - ./logs/php-${PHP_VERSION}:/var/log/php-${PHP_VERSION}
+      - ./www:/home/marketes/public
+    restart        : unless-stopped
+
+  database:
+    build:
+      ./docker/database/${DB_SERVER_TYPE}-${DB_SERVER_VERSION}
+    container_name:
+      ${PROJECT_NAME}-${DB_SERVER_TYPE}-${DB_SERVER_VERSION}
+    ports:
+      - '${DOCKER_INTERFACE}:${DATABASE_INTERFACE}'
+    environment:
+      MYSQL_DATABASE     : ${MYSQL_DATABASE}
+      MYSQL_USER         : ${MYSQL_USER}
+      MYSQL_PASSWORD     : ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ                 : Europe/Moscow
+    networks:
+      - marketes
+    volumes:
+      - ./logs/${DB_SERVER_TYPE}-${DB_SERVER_VERSION}:/var/log/${DB_SERVER_TYPE}-${DB_SERVER_VERSION}
+    restart: unless-stopped
+
+  server:
+    build:
+      ./docker/server/${WEB_SERVER_TYPE}
+    container_name:
+      ${PROJECT_NAME}-${WEB_SERVER_TYPE}-${WEB_SERVER_VERSION}
+    ports:
+      - '${DOCKER_INTERFACE}:${SERVER_INTERFACE_IN}'
+      - '${DOCKER_INTERFACE}:${SERVER_INTERFACE_OUT}'
+    links:
+      - php
+      - database
+    volumes:
+      - ./logs/${WEB_SERVER_TYPE}-${WEB_SERVER_VERSION}:/var/log/${WEB_SERVER_TYPE}-${WEB_SERVER_VERSION}
+      - ./www:/home/marketes/public
+    networks:
+      - marketes
+    restart        : unless-stopped
+
+networks:
+  marketes:
+    driver: bridge
