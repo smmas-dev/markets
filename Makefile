@@ -33,7 +33,6 @@ ps: ## Show list containers
 	docker-compose ps
 rebuild: down build up ## ## Rebuild Docker-project
 
-
 setup: env-prepare up ## Install all dependencies and requirements
 
 env-prepare: ## Preparing environment files

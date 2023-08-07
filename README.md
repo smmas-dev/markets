@@ -7,9 +7,9 @@
 Устанавливаем конфиг для конструктора
 
 ```shell
-cp .env.example .env
+make setup
 ```
 ### Заупск
 ```shell
-docker compose up -d
+make up
 ```
