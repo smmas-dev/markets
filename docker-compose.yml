@@ -52,19 +52,6 @@ services:
       - marketes
     restart        : unless-stopped
 
-  cache:
-    image: ${CACHE_TYPE}:${CACHE_VERSION}
-    container_name:
-      ${PROJECT_NAME}-${CACHE_TYPE}-${CACHE_VERSION}
-    ports:
-      - '${DOCKER_INTERFACE}:${CACHE_INTERFACE}'
-    networks:
-      - marketes
-    volumes:
-      - ./logs/${CACHE_TYPE}-${CACHE_VERSION}:/var/log/${CACHE_TYPE}-${CACHE_VERSION}
-    restart: unless-stopped
-#  search:
-
 networks:
   marketes:
     driver: bridge
